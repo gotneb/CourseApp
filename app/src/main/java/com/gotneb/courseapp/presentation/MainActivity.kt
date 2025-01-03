@@ -1,4 +1,4 @@
-package com.gotneb.courseapp
+package com.gotneb.courseapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
