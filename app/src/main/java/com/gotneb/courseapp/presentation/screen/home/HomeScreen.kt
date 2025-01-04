@@ -54,7 +54,7 @@ fun HomeScreen(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
-                .padding(20.dp)
+                .padding(16.dp)
         ) {
             // =================================
             // Header
