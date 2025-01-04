@@ -44,8 +44,10 @@ private val chips = listOf("All", "Language", "Design", "Coding", "AI")
 
 @Composable
 fun HomeScreen() {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+
     Scaffold { padding ->
-        Column(
+        LazyColumn(
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier
                 .padding(padding)
@@ -55,89 +57,94 @@ fun HomeScreen() {
             // =================================
             // Header
             // =================================
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.pfp),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(RoundedCornerShape(100))
-                )
-                Column {
-                    Text(text = "Hey, Jane")
-                    Text(text = "Find your favorites courses.")
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.pfp),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(RoundedCornerShape(100))
+                    )
+                    Column {
+                        Text(text = "Hey, Jane")
+                        Text(text = "Find your favorites courses.")
+                    }
                 }
             }
             // =================================
             // Search bar
             // =================================
-            TextField(
-                value = "",
-                onValueChange = { },
-                placeholder = {
-                    Text(text = "I would like to learn...")
-                },
-                maxLines = 1,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null,
-                    )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(100))
-            )
+            item {
+                TextField(
+                    value = "",
+                    onValueChange = { },
+                    placeholder = {
+                        Text(text = "I would like to learn...")
+                    },
+                    maxLines = 1,
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                        )
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(100))
+                )
+            }
             // =================================
             // Tags sliders
             // =================================
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                items(chips) { chipText ->
-                    Chip(chipText)
+            item {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    items(chips) { chipText ->
+                        Chip(chipText)
+                    }
                 }
             }
             // =================================
             // Course banners
             // =================================
-            val screenWidth = LocalConfiguration.current.screenWidthDp
-            val bannerWidth = (screenWidth * 0.75).dp // 80% of screen width
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(2) {
-                    CourseBanner(modifier = Modifier.width(bannerWidth))
+            item {
+                val bannerWidth = (screenWidth * 0.75).dp // 80% of screen width
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(2) {
+                        CourseBanner(modifier = Modifier.width(bannerWidth))
+                    }
                 }
             }
             // =================================
             // Popular courses
             // =================================
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(text = "Popular courses")
-                TextButton(onClick = {}) {
-                    Text(text = "See all")
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(text = "Popular courses")
+                    TextButton(onClick = {}) {
+                        Text(text = "See all")
+                    }
                 }
             }
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(5) {
-                    CourseListItem()
-                }
+            items(5) {
+                CourseListItem()
             }
         }
     }
