@@ -43,7 +43,9 @@ import com.gotneb.courseapp.presentation.screen.home.component.CourseListItem
 private val chips = listOf("All", "Language", "Design", "Coding", "AI")
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    state: HomeScreenState,
+) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     Scaffold { padding ->
@@ -158,6 +160,8 @@ fun HomeScreen() {
 @Composable
 private fun HomeScreenPreview() {
     CourseAppTheme {
-        HomeScreen()
+        HomeScreen(
+            state = HomeScreenState()
+        )
     }
 }
