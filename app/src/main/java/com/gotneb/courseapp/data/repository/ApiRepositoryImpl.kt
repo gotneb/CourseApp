@@ -9,7 +9,7 @@ import com.skydoves.sandwich.ktor.getApiResponse
 import io.ktor.client.HttpClient
 
 object API {
-    const val BASE_URL = "<yet_to_define>"
+    const val BASE_URL = "https://course-app-api-daua.onrender.com"
 }
 
 class ApiRepositoryImpl(
