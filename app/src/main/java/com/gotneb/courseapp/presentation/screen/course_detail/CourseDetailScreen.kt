@@ -2,6 +2,7 @@ package com.gotneb.courseapp.presentation.screen.course_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,6 +65,7 @@ fun CourseDetailScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .clip(RoundedCornerShape(100))
+                            .clickable { onReturnClick() }
                             .background(Color.Gray)
                             .padding(4.dp)
                     )
@@ -75,6 +77,7 @@ fun CourseDetailScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .clip(RoundedCornerShape(100))
+                            .clickable { onBookmarkClick() }
                             .background(Color.Gray)
                             .padding(4.dp)
                     )
