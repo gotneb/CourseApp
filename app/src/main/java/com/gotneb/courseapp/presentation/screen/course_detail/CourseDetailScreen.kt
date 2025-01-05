@@ -43,118 +43,114 @@ fun CourseDetailScreen(
     onBookmarkClick: () -> Unit,
     onReturnClick: () -> Unit,
 ) {
-    Scaffold { padding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+            ) {
+                Icon(
+                    // くそおめんどくせいな「Android Studio」
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                    ,
-                ) {
-                    Icon(
-                        // くそおめんどくせいな「Android Studio」
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(100))
-                            .clickable { onReturnClick() }
-                            .background(Color.Gray)
-                            .padding(4.dp)
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Text(text = "Course Details")
-                    Spacer(Modifier.weight(1f))
-                    Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(100))
-                            .clickable { onBookmarkClick() }
-                            .background(Color.Gray)
-                            .padding(4.dp)
-                    )
-                }
+                        .clip(RoundedCornerShape(100))
+                        .clickable { onReturnClick() }
+                        .background(Color.Gray)
+                        .padding(4.dp)
+                )
+                Spacer(Modifier.weight(1f))
+                Text(text = "Course Details")
+                Spacer(Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(100))
+                        .clickable { onBookmarkClick() }
+                        .background(Color.Gray)
+                        .padding(4.dp)
+                )
             }
-            item {
-                Surface(
-                    shadowElevation = 8.dp,
-                    shape = RoundedCornerShape(8.dp),
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.background),
-                        contentDescription = null,
-                        modifier = Modifier.clip(RoundedCornerShape(8.dp))
-                    )
-                }
+        }
+        item {
+            Surface(
+                shadowElevation = 8.dp,
+                shape = RoundedCornerShape(8.dp),
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.background),
+                    contentDescription = null,
+                    modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                )
             }
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Jetpack Compose Kotlin Programming, Coroutine",
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f),
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Text(text = "$459")
-                }
+        }
+        item {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = "Jetpack Compose Kotlin Programming, Coroutine",
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(Modifier.width(12.dp))
+                Text(text = "$459")
             }
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.pfp),
-                        contentDescription = "Instructor's photo",
-                        modifier = Modifier
-                            .padding(end = 12.dp)
-                            .size(48.dp)
-                            .clip(RoundedCornerShape(100))
-                    )
-                    Text(text = "Jane Doe")
-                    Spacer(Modifier.weight(1f))
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = "Instructor's rating",
-                    )
-                    Text(text = "4.8")
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Enrolled people",
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                    Text(text = "778")
-                }
+        }
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.pfp),
+                    contentDescription = "Instructor's photo",
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(100))
+                )
+                Text(text = "Jane Doe")
+                Spacer(Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Instructor's rating",
+                )
+                Text(text = "4.8")
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Enrolled people",
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+                Text(text = "778")
             }
-            item {
-                Column {
-                    Text(text = "Description")
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = "Learn Kotlin, a modern programming language that runs on the Java  Virtual Machine. Acquire expertise in syntax, concurrency, and Android  development to build modern Android applications with Kotlin for  efficient and expressive coding, essential.",
-                        maxLines = 4,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+        }
+        item {
+            Column {
+                Text(text = "Description")
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Learn Kotlin, a modern programming language that runs on the Java  Virtual Machine. Acquire expertise in syntax, concurrency, and Android  development to build modern Android applications with Kotlin for  efficient and expressive coding, essential.",
+                    maxLines = 4,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
-            item {
-                Text(text = "15 Lessons")
-            }
-            items(5) {
-                LessonCard()
-            }
+        }
+        item {
+            Text(text = "15 Lessons")
+        }
+        items(5) {
+            LessonCard()
         }
     }
 }

@@ -48,106 +48,103 @@ fun HomeScreen(
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
-    Scaffold { padding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            // =================================
-            // Header
-            // =================================
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.pfp),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(100))
-                    )
-                    Column {
-                        Text(text = "Hey, Jane")
-                        Text(text = "Find your favorites courses.")
-                    }
-                }
-            }
-            // =================================
-            // Search bar
-            // =================================
-            item {
-                TextField(
-                    value = "",
-                    onValueChange = { },
-                    placeholder = {
-                        Text(text = "I would like to learn...")
-                    },
-                    maxLines = 1,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                    ),
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // =================================
+        // Header
+        // =================================
+        item {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.pfp),
+                    contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .size(64.dp)
                         .clip(RoundedCornerShape(100))
                 )
-            }
-            // =================================
-            // Tags sliders
-            // =================================
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(chips) { chipText ->
-                        Chip(chipText)
-                    }
+                Column {
+                    Text(text = "Hey, Jane")
+                    Text(text = "Find your favorites courses.")
                 }
             }
-            // =================================
-            // Course banners
-            // =================================
-            item {
-                val bannerWidth = (screenWidth * 0.75).dp // 80% of screen width
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    items(2) {
-                        CourseBanner(modifier = Modifier.width(bannerWidth))
-                    }
+        }
+        // =================================
+        // Search bar
+        // =================================
+        item {
+            TextField(
+                value = "",
+                onValueChange = { },
+                placeholder = {
+                    Text(text = "I would like to learn...")
+                },
+                maxLines = 1,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null,
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(100))
+            )
+        }
+        // =================================
+        // Tags sliders
+        // =================================
+        item {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                items(chips) { chipText ->
+                    Chip(chipText)
                 }
             }
-            // =================================
-            // Popular courses
-            // =================================
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(text = "Popular courses")
-                    TextButton(onClick = {}) {
-                        Text(text = "See all")
-                    }
+        }
+        // =================================
+        // Course banners
+        // =================================
+        item {
+            val bannerWidth = (screenWidth * 0.75).dp // 80% of screen width
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(2) {
+                    CourseBanner(modifier = Modifier.width(bannerWidth))
                 }
             }
-            items(5) {
-                CourseListItem()
+        }
+        // =================================
+        // Popular courses
+        // =================================
+        item {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(text = "Popular courses")
+                TextButton(onClick = {}) {
+                    Text(text = "See all")
+                }
             }
+        }
+        items(5) {
+            CourseListItem()
         }
     }
 }

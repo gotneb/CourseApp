@@ -35,80 +35,76 @@ fun SearchScreen(
     onValueChange: (String) -> Unit,
     onCourseClick: () -> Unit,
 ) {
-    Scaffold { padding ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            // ======================
-            // Header
-            // ======================
-            item(span = { GridItemSpan(2) }) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // ======================
+        // Header
+        // ======================
+        item(span = { GridItemSpan(2) }) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+            ) {
+                Icon(
+                    // くそおめんどくせいな「Android Studio」
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                    ,
-                ) {
-                    Icon(
-                        // くそおめんどくせいな「Android Studio」
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(100))
-                            .background(Color.Gray)
-                            .padding(4.dp)
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Text(text = "Search")
-                    Spacer(Modifier.weight(1f))
-                }
-            }
-            // ======================
-            // Search bar
-            // ======================
-            item(span = { GridItemSpan(2) }) {
-                TextField(
-                    value = state.searchText,
-                    onValueChange = onValueChange,
-                    placeholder = {
-                        Text(text = "I would like to learn...")
-                    },
-                    maxLines = 1,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
                         .clip(RoundedCornerShape(100))
+                        .background(Color.Gray)
+                        .padding(4.dp)
                 )
+                Spacer(Modifier.weight(1f))
+                Text(text = "Search")
+                Spacer(Modifier.weight(1f))
             }
-            // ======================
-            // Results
-            // ======================
-            item(span = { GridItemSpan(2) }) {
-                Text(
-                    text = "Result founds (17)",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            items(6) {
-                CourseCard(onCourseClick)
-            }
+        }
+        // ======================
+        // Search bar
+        // ======================
+        item(span = { GridItemSpan(2) }) {
+            TextField(
+                value = state.searchText,
+                onValueChange = onValueChange,
+                placeholder = {
+                    Text(text = "I would like to learn...")
+                },
+                maxLines = 1,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null,
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(100))
+            )
+        }
+        // ======================
+        // Results
+        // ======================
+        item(span = { GridItemSpan(2) }) {
+            Text(
+                text = "Result founds (17)",
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        items(6) {
+            CourseCard(onCourseClick)
         }
     }
 }

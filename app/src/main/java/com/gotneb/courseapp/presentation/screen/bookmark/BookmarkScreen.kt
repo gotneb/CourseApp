@@ -36,70 +36,67 @@ val categories = listOf("All", "Language", "Design", "Coding", "AI")
 fun BookmarkScreen(modifier: Modifier = Modifier) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
-    Scaffold { padding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            // =====================
-            // Item
-            // =====================
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(text = "Bookmarks")
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // =====================
+        // Item
+        // =====================
+        item {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(text = "Bookmarks")
+            }
+        }
+        // =====================
+        // Search bar
+        // =====================
+        item() {
+            TextField(
+                value = "",
+                onValueChange = {},
+                placeholder = {
+                    Text(text = "Search your course...")
+                },
+                maxLines = 1,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null,
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(100))
+            )
+        }
+        // =====================
+        // Categories
+        // =====================
+        item {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(categories) { category ->
+                    Chip(category)
                 }
             }
-            // =====================
-            // Search bar
-            // =====================
-            item() {
-                TextField(
-                    value = "",
-                    onValueChange = {},
-                    placeholder = {
-                        Text(text = "Search your course...")
-                    },
-                    maxLines = 1,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(100))
-                )
-            }
-            // =====================
-            // Categories
-            // =====================
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(categories) { category ->
-                        Chip(category)
-                    }
-                }
-            }
-            // =====================
-            // Courses
-            // =====================
-            items(4) {
-                CourseBanner(modifier = Modifier.width(screenWidth.dp))
-            }
+        }
+        // =====================
+        // Courses
+        // =====================
+        items(4) {
+            CourseBanner(modifier = Modifier.width(screenWidth.dp))
         }
     }
 }
