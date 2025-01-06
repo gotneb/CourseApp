@@ -12,6 +12,8 @@ interface ApiRepository {
 
     suspend fun searchCourse(name: String): ApiResponse<SearchCourseResponseModel>
 
-    suspend fun getCoursesByCategory(category: String): ApiResponse<List<CourseModel>>
+    suspend fun getPopularCourses(): ApiResponse<SearchCourseResponseModel>
+
+    suspend fun getCoursesByCategory(category: String): ApiResponse<SearchCourseResponseModel>
 
 }

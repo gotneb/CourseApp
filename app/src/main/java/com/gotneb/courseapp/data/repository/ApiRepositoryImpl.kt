@@ -24,7 +24,10 @@ class ApiRepositoryImpl(
     override suspend fun searchCourse(name: String): ApiResponse<SearchCourseResponseModel> =
         httpClient.getApiResponse("search/courses/$name")
 
-    override suspend fun getCoursesByCategory(category: String): ApiResponse<List<CourseModel>> =
+    override suspend fun getPopularCourses(): ApiResponse<SearchCourseResponseModel> =
+        httpClient.getApiResponse("search/popular")
+
+    override suspend fun getCoursesByCategory(category: String): ApiResponse<SearchCourseResponseModel> =
         httpClient.getApiResponse("search/tags/$category")
 
 }
