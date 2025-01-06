@@ -1,6 +1,7 @@
 package com.gotneb.courseapp.presentation.screen.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,10 +16,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -32,11 +31,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 import com.gotneb.courseapp.R
 import com.gotneb.courseapp.presentation.screen.home.component.Chip
 import com.gotneb.courseapp.presentation.screen.home.component.CourseBanner
 import com.gotneb.courseapp.presentation.screen.home.component.CourseListItem
+import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 
 
 // Mockup data
@@ -45,7 +44,21 @@ private val chips = listOf("All", "Language", "Design", "Coding", "AI")
 @Composable
 fun HomeScreen(
     state: HomeScreenState,
+    onCourseClick: (Int) -> Unit,
+    onCategorySelected: (String) -> Unit,
+    onSearchChange: (String) -> Unit,
+    onSearchClick: (String) -> Unit,
 ) {
+    if (state.isLoadingPopularCourses || state.isLoadingCategoriesCourses) {
+        return Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            CircularProgressIndicator(modifier = Modifier.size(48.dp))
+        }
+    }
+
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     LazyColumn(
@@ -80,8 +93,8 @@ fun HomeScreen(
         // =================================
         item {
             TextField(
-                value = "",
-                onValueChange = { },
+                value = state.searchText,
+                onValueChange = onSearchChange,
                 placeholder = {
                     Text(text = "I would like to learn...")
                 },
@@ -90,6 +103,7 @@ fun HomeScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
+                        modifier = Modifier.clickable{ onSearchClick(state.searchText) }
                     )
                 },
                 colors = TextFieldDefaults.colors(
@@ -110,7 +124,10 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(chips) { chipText ->
-                    Chip(chipText)
+                    Chip(
+                        chipText,
+                        onClick = onCategorySelected,
+                    )
                 }
             }
         }
@@ -123,8 +140,12 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(2) {
-                    CourseBanner(modifier = Modifier.width(bannerWidth))
+                items(state.categoriesCourses) { c ->
+                    CourseBanner(
+                        course = c,
+                        onClick = onCourseClick,
+                        modifier = Modifier.width(bannerWidth),
+                    )
                 }
             }
         }
@@ -143,8 +164,11 @@ fun HomeScreen(
                 }
             }
         }
-        items(5) {
-            CourseListItem()
+        items(state.popularCourses) { course ->
+            CourseListItem(
+                course = course,
+                onClick = onCourseClick,
+            )
         }
     }
 }
@@ -154,11 +178,18 @@ fun HomeScreen(
     showBackground = true,
     name = "Home"
 )
+
 @Composable
 private fun HomeScreenPreview() {
     CourseAppTheme {
         HomeScreen(
-            state = HomeScreenState()
+            state = HomeScreenState(
+                isLoadingPopularCourses = true,
+            ),
+            onCourseClick = {},
+            onSearchChange = {},
+            onSearchClick = {},
+            onCategorySelected = {},
         )
     }
 }

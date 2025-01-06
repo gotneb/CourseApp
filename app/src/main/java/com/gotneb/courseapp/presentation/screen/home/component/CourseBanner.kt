@@ -2,6 +2,7 @@ package com.gotneb.courseapp.presentation.screen.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,17 +25,36 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.R
+import com.gotneb.courseapp.domain.model.CourseModel
+import com.gotneb.courseapp.domain.model.LessonModel
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 
+fun List<LessonModel>.totalDuration(): String {
+    val totalMinutes = this.sumOf { it.duration } / 60
+    val hours = totalMinutes / 60
+    val minutes = totalMinutes % 60
+
+    return when {
+        hours > 0 && minutes > 0 -> "${hours}h ${minutes}min"
+        hours > 0 -> "${hours}h"
+        else -> "${minutes}min"
+    }
+}
 
 @Composable
-fun CourseBanner(modifier: Modifier = Modifier) {
+fun CourseBanner(
+    course: CourseModel,
+    onClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         shadowElevation = 8.dp,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.clickable{ onClick(course.id) }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -72,7 +92,7 @@ fun CourseBanner(modifier: Modifier = Modifier) {
                                 imageVector = Icons.Default.Star,
                                 contentDescription = null,
                             )
-                            Text(text = "4.8 (742)")
+                            Text(text = "${course.rating} (${course.enrolledPeople})")
                         }
                     }
                     // Bookmark button
@@ -92,8 +112,16 @@ fun CourseBanner(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Machine Learning")
-                Text(text = "$459")
+                Text(
+                    text = course.title,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = "$${course.price}",
+                    modifier = Modifier.padding(start = 8.dp),
+                )
             }
             // Instructor
             Row(
@@ -107,23 +135,23 @@ fun CourseBanner(modifier: Modifier = Modifier) {
                         .size(32.dp)
                         .clip(RoundedCornerShape(100))
                 )
-                Text(text = "Jane Doe")
+                Text(text = course.instructor.name)
             }
             // Details
             Row {
-                Text(text = "14 lessons • 8h 56min")
+                Text(text = "${course.lessons.size} lessons • ${course.lessons.totalDuration()}")
             }
         }
     }
 }
 
-@Preview(
-    showBackground = true,
-    name = "Course Banner"
-)
-@Composable
-private fun CourseBannerPreview() {
-    CourseAppTheme {
-        CourseBanner(modifier =  Modifier.fillMaxWidth())
-    }
-}
+//@Preview(
+//    showBackground = true,
+//    name = "Course Banner"
+//)
+//@Composable
+//private fun CourseBannerPreview() {
+//    CourseAppTheme {
+//        CourseBanner(modifier =  Modifier.fillMaxWidth())
+//    }
+//}

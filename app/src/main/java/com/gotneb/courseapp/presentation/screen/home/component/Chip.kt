@@ -1,6 +1,7 @@
 package com.gotneb.courseapp.presentation.screen.home.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,10 +15,14 @@ import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 
 @Composable
-fun Chip(text: String) {
+fun Chip(
+    text: String,
+    onClick: (String) -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(100))
+            .clickable{ onClick(text) }
             .background(Color.Gray)
             .padding(horizontal = 16.dp, vertical = 2.dp)
     ) {
