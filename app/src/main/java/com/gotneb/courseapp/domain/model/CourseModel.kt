@@ -6,8 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CourseModel(
     val id: Int,
-    @SerialName("instructor_id")
-    val instructorId: Int,
+    val instructor: InstructorModel,
     val title: String,
     @SerialName("thumbnail_url")
     val thumbnailUrl: String,
