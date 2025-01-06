@@ -22,10 +22,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import com.gotneb.courseapp.domain.model.LessonModel
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 
+fun Int.toTimeFormat(): String {
+    val minutes = this / 60
+    val seconds = this % 60
+    return "%02d:%02d".format(minutes, seconds)
+}
+
 @Composable
-fun LessonCard() {
+fun LessonCard(lesson: LessonModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -48,20 +55,20 @@ fun LessonCard() {
             )
         }
         Text(
-            text = LoremIpsum(10).values.first().toString(),
+            text = lesson.title,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
         )
         Spacer(Modifier.weight(.08f))
-        Text(text = "01:39")
+        Text(text = lesson.duration.toTimeFormat())
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun LessonCardPreview() {
-    CourseAppTheme {
-        LessonCard()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun LessonCardPreview() {
+//    CourseAppTheme {
+//        LessonCard()
+//    }
+//}

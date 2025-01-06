@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,12 +15,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -44,123 +47,130 @@ fun CourseDetailScreen(
     onReturnClick: () -> Unit,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = if (state.isLoading) Arrangement.Center else Arrangement.spacedBy(16.dp),
+        horizontalAlignment = if (state.isLoading) Alignment.CenterHorizontally else Alignment.Start,
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp),
-            ) {
-                Icon(
-                    // くそおめんどくせいな「Android Studio」
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = null,
+        if (state.isLoading) {
+            item {
+                CircularProgressIndicator(modifier = Modifier.size(48.dp))
+            }
+        } else {
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(100))
-                        .clickable { onReturnClick() }
-                        .background(Color.Gray)
-                        .padding(4.dp)
-                )
-                Spacer(Modifier.weight(1f))
-                Text(text = "Course Details")
-                Spacer(Modifier.weight(1f))
-                Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(100))
-                        .clickable { onBookmarkClick() }
-                        .background(Color.Gray)
-                        .padding(4.dp)
-                )
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                ) {
+                    Icon(
+                        // くそおめんどくせいな「Android Studio」
+                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(100))
+                            .clickable { onReturnClick() }
+                            .background(Color.Gray)
+                            .padding(4.dp)
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Text(text = "Course Details")
+                    Spacer(Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(100))
+                            .clickable { onBookmarkClick() }
+                            .background(Color.Gray)
+                            .padding(4.dp)
+                    )
+                }
             }
-        }
-        item {
-            Surface(
-                shadowElevation = 8.dp,
-                shape = RoundedCornerShape(8.dp),
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.clip(RoundedCornerShape(8.dp))
-                )
+            item {
+                Surface(
+                    shadowElevation = 8.dp,
+                    shape = RoundedCornerShape(8.dp),
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.background),
+                        contentDescription = null,
+                        modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                    )
+                }
             }
-        }
-        item {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = "Jetpack Compose Kotlin Programming, Coroutine",
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                Spacer(Modifier.width(12.dp))
-                Text(text = "$459")
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = state.course!!.title,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Text(text = "$${state.course.price}")
+                }
             }
-        }
-        item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.pfp),
-                    contentDescription = "Instructor's photo",
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .size(48.dp)
-                        .clip(RoundedCornerShape(100))
-                )
-                Text(text = "Jane Doe")
-                Spacer(Modifier.weight(1f))
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Instructor's rating",
-                )
-                Text(text = "4.8")
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Enrolled people",
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Text(text = "778")
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.pfp),
+                        contentDescription = "Instructor's photo",
+                        modifier = Modifier
+                            .padding(end = 12.dp)
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(100))
+                    )
+                    Text(text = state.course!!.instructor.name)
+                    Spacer(Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Instructor's rating",
+                    )
+                    Text(text = "${state.course.rating}")
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Enrolled people",
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                    Text(text = "${state.course.enrolledPeople}")
+                }
             }
-        }
-        item {
-            Column {
-                Text(text = "Description")
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "Learn Kotlin, a modern programming language that runs on the Java  Virtual Machine. Acquire expertise in syntax, concurrency, and Android  development to build modern Android applications with Kotlin for  efficient and expressive coding, essential.",
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
-                )
+            item {
+                Column {
+                    Text(text = "Description")
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = state.course!!.description,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
-        }
-        item {
-            Text(text = "15 Lessons")
-        }
-        items(5) {
-            LessonCard()
+            item {
+                Text(text = "${state.course!!.lessons.size} Lessons")
+            }
+            items(state.course!!.lessons) { lesson ->
+                LessonCard(lesson)
+            }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CourseDetailScreenPreview() {
     CourseAppTheme {
         CourseDetailScreen(
-            state = CourseDetailState(),
+            state = CourseDetailState(isLoading = false),
             onBookmarkClick = {},
             onReturnClick = {},
         )
