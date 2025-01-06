@@ -1,21 +1,26 @@
 package com.gotneb.courseapp.presentation.screen.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -33,10 +38,12 @@ import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 fun SearchScreen(
     state: SearchScreenState,
     onValueChange: (String) -> Unit,
-    onCourseClick: () -> Unit,
+    onCourseClick: (Int) -> Unit,
+    onSearchClick: () -> Unit,
+    onReturnClick: () -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(if (state.isLoading) 1 else 2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier
@@ -46,7 +53,7 @@ fun SearchScreen(
         // ======================
         // Header
         // ======================
-        item(span = { GridItemSpan(2) }) {
+        item(span = { GridItemSpan(if (state.isLoading) 1 else 2) }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -59,6 +66,7 @@ fun SearchScreen(
                     contentDescription = null,
                     modifier = Modifier
                         .clip(RoundedCornerShape(100))
+                        .clickable{ onReturnClick() }
                         .background(Color.Gray)
                         .padding(4.dp)
                 )
@@ -70,7 +78,7 @@ fun SearchScreen(
         // ======================
         // Search bar
         // ======================
-        item(span = { GridItemSpan(2) }) {
+        item(span = { GridItemSpan(if (state.isLoading) 1 else 2) }) {
             TextField(
                 value = state.searchText,
                 onValueChange = onValueChange,
@@ -82,6 +90,7 @@ fun SearchScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
+                        modifier = Modifier.clickable{ onSearchClick() }
                     )
                 },
                 colors = TextFieldDefaults.colors(
@@ -97,26 +106,45 @@ fun SearchScreen(
         // ======================
         // Results
         // ======================
-        item(span = { GridItemSpan(2) }) {
-            Text(
-                text = "Result founds (17)",
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        items(6) {
-            CourseCard(onCourseClick)
+        if (state.isLoading) {
+            item {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(48.dp)
+                    )
+                }
+            }
+        } else {
+            item(span = { GridItemSpan(2) }) {
+                Text(
+                    text = "Result founds (${state.courses.size})",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            items(state.courses) { c ->
+                CourseCard(
+                    course = c,
+                    onClick = { onCourseClick(c.id) },
+                )
+            }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun SearchScreenPreview() {
     CourseAppTheme {
         SearchScreen(
-            state = SearchScreenState(),
+            state = SearchScreenState(isLoading = true),
             onValueChange = {},
             onCourseClick = {},
+            onSearchClick = {},
+            onReturnClick = {},
         )
     }
 }

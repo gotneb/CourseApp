@@ -22,9 +22,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 import com.gotneb.courseapp.R
+import com.gotneb.courseapp.domain.model.CourseModel
+
+fun String.capitalize(): String {
+    return this.replaceFirstChar { it.uppercase() }
+}
 
 @Composable
 fun CourseCard(
+    course: CourseModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,9 +49,9 @@ fun CourseCard(
                 contentDescription = null,
                 modifier = Modifier.clip(RoundedCornerShape(5))
             )
-            Text(text = "Language")
+            Text(text = course.tags.first().capitalize())
             Text(
-                text = "Online German Course. Learn how to talk.",
+                text = course.title,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -54,24 +60,24 @@ fun CourseCard(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = "Deutsch Academy",
+                    text = course.instructor.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(Modifier.width(12.dp))
-                Text(text = "$599")
+                Text(text = "$${course.price}")
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun CourseCardPreview() {
-    CourseAppTheme {
-        CourseCard(
-            onClick = {},
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun CourseCardPreview() {
+//    CourseAppTheme {
+//        CourseCard(
+//            onClick = {},
+//        )
+//    }
+//}
