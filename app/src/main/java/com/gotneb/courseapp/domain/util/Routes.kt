@@ -17,7 +17,9 @@ data object BookmarkScreen : Route {
 }
 
 @Serializable
-data object SearchScreen : Route {
+data class SearchScreen(
+    val searchText: String
+) : Route {
     override val name = "search"
 }
 
@@ -27,7 +29,7 @@ data object MyCoursesScreen : Route {
 }
 
 @Serializable
-data class CourseDetail(
+data class CourseDetailScreen(
     val id: Int
 ) : Route {
     override val name = "course_detail"
