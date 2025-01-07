@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -33,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.presentation.screen.search.components.CourseCard
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
+import com.gotneb.courseapp.presentation.ui.theme.DarkBlue
+import com.gotneb.courseapp.presentation.ui.theme.WhiteSnow
 
 @Composable
 fun SearchScreen(
@@ -64,14 +67,18 @@ fun SearchScreen(
                     // くそおめんどくせいな「Android Studio」
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     contentDescription = null,
+                    tint = DarkBlue,
                     modifier = Modifier
                         .clip(RoundedCornerShape(100))
                         .clickable{ onReturnClick() }
-                        .background(Color.Gray)
+                        .background(WhiteSnow)
                         .padding(4.dp)
                 )
                 Spacer(Modifier.weight(1f))
-                Text(text = "Search")
+                Text(
+                    text = "Search",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
                 Spacer(Modifier.weight(1f))
             }
         }
@@ -83,8 +90,12 @@ fun SearchScreen(
                 value = state.searchText,
                 onValueChange = onValueChange,
                 placeholder = {
-                    Text(text = "I would like to learn...")
+                    Text(
+                        text = "I would like to learn...",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 },
+                textStyle = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 leadingIcon = {
                     Icon(
@@ -122,7 +133,8 @@ fun SearchScreen(
             item(span = { GridItemSpan(2) }) {
                 Text(
                     text = "Result founds (${state.courses.size})",
-                    modifier = Modifier.fillMaxWidth()
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
             items(state.courses) { c ->
