@@ -6,7 +6,9 @@ import com.gotneb.courseapp.domain.model.SearchCourseResponseModel
 import com.skydoves.sandwich.ApiResponse
 
 interface ApiRepository {
-    suspend fun getCourse(id: Int): ApiResponse<CourseModel>
+    suspend fun getCourse(id: Int): ApiResponse<SearchCourseResponseModel>
+
+    suspend fun getCourses(ids: List<Int>): ApiResponse<SearchCourseResponseModel>
 
     suspend fun getInstructor(id: Int): ApiResponse<InstructorModel>
 

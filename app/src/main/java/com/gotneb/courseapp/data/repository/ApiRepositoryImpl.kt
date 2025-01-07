@@ -15,8 +15,21 @@ object API {
 class ApiRepositoryImpl(
     private val httpClient: HttpClient
 ): ApiRepository {
-    override suspend fun getCourse(id: Int): ApiResponse<CourseModel> =
-        httpClient.getApiResponse("courses/$id")
+    override suspend fun getCourse(id: Int): ApiResponse<SearchCourseResponseModel> =
+        httpClient
+            .getApiResponse("courses") {
+                url {
+                    parameters.append("ids", id.toString())
+                }
+            }
+
+    override suspend fun getCourses(ids: List<Int>): ApiResponse<SearchCourseResponseModel> =
+        httpClient
+            .getApiResponse("courses") {
+                url {
+                    parameters.appendAll("ids", ids.map { it.toString() })
+                }
+            }
 
     override suspend fun getInstructor(id: Int): ApiResponse<InstructorModel> =
         httpClient.getApiResponse("instructors/$id")
