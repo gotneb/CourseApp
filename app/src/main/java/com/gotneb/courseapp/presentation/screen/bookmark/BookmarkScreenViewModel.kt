@@ -21,7 +21,7 @@ import javax.inject.Inject
 class BookmarkScreenViewModel @Inject constructor(
     private val repository: ApiRepository,
     private val dao: CourseBookmarkDao,
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(BookmarkScreenState())
     val state = _state.asStateFlow()
@@ -42,9 +42,9 @@ class BookmarkScreenViewModel @Inject constructor(
 
     fun onSearchFilter(search: String) {
         _state.update {
-            it.copy(
-                filteredCourses = it.courses.filter { course -> course.title.lowercase().contains(search.lowercase()) }
-            )
+            it.copy(filteredCourses = it.courses.filter { course ->
+                course.title.lowercase().contains(search.lowercase())
+            })
         }
     }
 
@@ -63,9 +63,7 @@ class BookmarkScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun getCourses(ids: List<Int>) = repository
-        .getCourses(ids)
-        .onSuccess {
+    suspend fun getCourses(ids: List<Int>) = repository.getCourses(ids).onSuccess {
             Log.d("BookmarkScreen", "Sucess fetching courses ids \"${ids}\"")
             _state.update {
                 val courses = data.data.map { course -> course.copy(isBookmarked = true) }.toList()
@@ -74,14 +72,12 @@ class BookmarkScreenViewModel @Inject constructor(
                     courses = courses,
                 )
             }
-        }
-        .onFailure {
+        }.onFailure {
             Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
             _state.update {
                 it.copy(isLoading = false)
             }
-        }
-        .onError {
+        }.onError {
             Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
             _state.update {
                 it.copy(isLoading = false)
