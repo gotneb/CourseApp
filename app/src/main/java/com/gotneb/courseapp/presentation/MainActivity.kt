@@ -101,6 +101,8 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate(CourseDetailScreen(courseID))
                                 },
                                 onCategoryChange = viewModel::onCategoryChange,
+                                onSearchClick = viewModel::onSearchFilter,
+                                onValueChange = viewModel::onSearchTextChange,
                             )
                         }
                         composable<SearchScreen> {

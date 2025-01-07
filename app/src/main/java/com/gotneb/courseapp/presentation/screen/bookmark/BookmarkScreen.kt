@@ -1,5 +1,6 @@
 package com.gotneb.courseapp.presentation.screen.bookmark
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,8 @@ val categories = listOf("All", "Language", "Design", "Coding", "AI")
 @Composable
 fun BookmarkScreen(
     state: BookmarkScreenState,
+    onValueChange: (String) -> Unit,
+    onSearchClick: (String) -> Unit,
     onClick: (Int) -> Unit,
     onBookmarkClick: (Int) -> Unit,
     onCategoryChange: (String) -> Unit,
@@ -73,8 +76,8 @@ fun BookmarkScreen(
         // =====================
         item() {
             TextField(
-                value = "",
-                onValueChange = {},
+                value = state.searchText,
+                onValueChange = onValueChange,
                 placeholder = {
                     Text(text = "Search your course...")
                 },
@@ -83,6 +86,7 @@ fun BookmarkScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
+                        modifier = Modifier.clickable{ onSearchClick(state.searchText) }
                     )
                 },
                 colors = TextFieldDefaults.colors(

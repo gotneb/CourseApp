@@ -40,6 +40,18 @@ class BookmarkScreenViewModel @Inject constructor(
         }
     }
 
+    fun onSearchFilter(search: String) {
+        _state.update {
+            it.copy(
+                filteredCourses = it.courses.filter { course -> course.title.lowercase().contains(search.lowercase()) }
+            )
+        }
+    }
+
+    fun onSearchTextChange(search: String) = _state.update {
+        it.copy(searchText = search)
+    }
+
     fun onCategoryChange(category: String) {
         _state.update {
             val filtered = if (category == "All") it.courses else {
