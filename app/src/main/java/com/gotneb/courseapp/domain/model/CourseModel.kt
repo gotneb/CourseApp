@@ -16,5 +16,6 @@ data class CourseModel(
     val enrolledPeople: Int,
     val description: String,
     val tags: List<String>,
-    val lessons: List<LessonModel>
+    val lessons: List<LessonModel>,
+    val isBookmarked: Boolean? = false,
 )
