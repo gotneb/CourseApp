@@ -54,6 +54,11 @@ val AppTypography = Typography(
         fontWeight = FontWeight.Medium,
         color = Gray,
     ),
+    headlineLarge = TextStyle( // For "Popular Courses" (202244, 20sp, Medium)
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Medium,
+        color = DarkBlue,
+    ),
     headlineMedium = TextStyle( // For "Popular Courses" (202244, 20sp, Medium)
         fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
@@ -84,5 +89,5 @@ val AppTypography = Typography(
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
         color = DarkGray
-    )
+    ),
 )
