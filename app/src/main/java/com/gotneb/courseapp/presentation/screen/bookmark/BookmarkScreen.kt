@@ -6,34 +6,48 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.presentation.screen.home.component.Chip
 import com.gotneb.courseapp.presentation.screen.home.component.CourseBanner
-import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 
 val categories = listOf("All", "Language", "Design", "Coding", "AI")
 
 @Composable
-fun BookmarkScreen(modifier: Modifier = Modifier) {
+fun BookmarkScreen(
+    state: BookmarkScreenState,
+    onClick: (Int) -> Unit,
+    onBookmarkClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (state.isLoading) {
+        return Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            CircularProgressIndicator(modifier = Modifier.size(48.dp))
+        }
+    }
+
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     LazyColumn(
@@ -95,16 +109,21 @@ fun BookmarkScreen(modifier: Modifier = Modifier) {
         // =====================
         // Courses
         // =====================
-        items(4) {
-            CourseBanner(modifier = Modifier.width(screenWidth.dp))
+        items(state.courses) { c ->
+            CourseBanner(
+                course = c,
+                onClick = onClick,
+                onBookmarkClick = onBookmarkClick,
+                modifier = Modifier.width(screenWidth.dp),
+            )
         }
     }
 }
 
-@Preview
-@Composable
-private fun BookmarkScreenPreview() {
-    CourseAppTheme {
-        BookmarkScreen()
-    }
-}
+//@Preview
+//@Composable
+//private fun BookmarkScreenPreview() {
+//    CourseAppTheme {
+//        BookmarkScreen()
+//    }
+//}
