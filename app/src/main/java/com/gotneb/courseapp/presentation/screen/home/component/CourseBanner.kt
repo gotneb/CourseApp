@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -49,33 +51,30 @@ fun List<LessonModel>.totalDuration(): String {
 fun CourseBanner(
     course: CourseModel,
     onClick: (Int) -> Unit,
+    onBookmarkClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        shadowElevation = 8.dp,
+    Surface(shadowElevation = 8.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.clickable{ onClick(course.id) }
-    ) {
+        modifier = Modifier.clickable { onClick(course.id) }) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = modifier
-                .padding(8.dp)
+            modifier = modifier.padding(8.dp),
         ) {
             // Image Header
             Box(
                 modifier = modifier
             ) {
-            Image(
-                painter = painterResource(R.drawable.bg),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = modifier
-                    .height(200.dp)
-                    .clip(RoundedCornerShape(6))
-            )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                Image(
+                    painter = painterResource(R.drawable.bg),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = modifier
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(6))
+                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier
                 ) {
                     // Rating
                     Box(
@@ -85,8 +84,7 @@ fun CourseBanner(
                             .background(Color.White)
                     ) {
                         Row(
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp, vertical = 2.dp)
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Star,
@@ -96,21 +94,20 @@ fun CourseBanner(
                         }
                     }
                     // Bookmark button
-                    Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
+                    Icon(imageVector = if (course.isBookmarked!!) Icons.Filled.Favorite
+                    else Icons.Default.FavoriteBorder,
                         contentDescription = null,
                         modifier = Modifier
                             .padding(8.dp)
+                            .clickable { onBookmarkClick(course.id) }
                             .clip(RoundedCornerShape(100))
                             .background(Color.White)
-                            .padding(4.dp)
-                    )
+                            .padding(4.dp))
                 }
             }
             // Title
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = course.title,

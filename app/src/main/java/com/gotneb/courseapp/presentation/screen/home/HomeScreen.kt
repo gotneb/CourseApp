@@ -48,6 +48,7 @@ fun HomeScreen(
     onCategorySelected: (String) -> Unit,
     onSearchChange: (String) -> Unit,
     onSearchClick: (String) -> Unit,
+    onBookmarkClick: (Int) -> Unit,
 ) {
     if (state.isLoadingPopularCourses || state.isLoadingCategoriesCourses) {
         return Column(
@@ -144,6 +145,7 @@ fun HomeScreen(
                     CourseBanner(
                         course = c,
                         onClick = onCourseClick,
+                        onBookmarkClick = onBookmarkClick,
                         modifier = Modifier.width(bannerWidth),
                     )
                 }
@@ -190,6 +192,7 @@ private fun HomeScreenPreview() {
             onSearchChange = {},
             onSearchClick = {},
             onCategorySelected = {},
+            onBookmarkClick = {},
         )
     }
 }
