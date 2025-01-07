@@ -36,6 +36,7 @@ fun BookmarkScreen(
     state: BookmarkScreenState,
     onClick: (Int) -> Unit,
     onBookmarkClick: (Int) -> Unit,
+    onCategoryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (state.isLoading) {
@@ -102,14 +103,17 @@ fun BookmarkScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(categories) { category ->
-                    Chip(category)
+                    Chip(
+                        category,
+                        onClick = onCategoryChange,
+                    )
                 }
             }
         }
         // =====================
         // Courses
         // =====================
-        items(state.courses) { c ->
+        items(state.filteredCourses) { c ->
             CourseBanner(
                 course = c,
                 onClick = onClick,

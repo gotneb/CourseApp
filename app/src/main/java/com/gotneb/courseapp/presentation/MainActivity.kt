@@ -99,7 +99,8 @@ class MainActivity : ComponentActivity() {
                                 onBookmarkClick = viewModel::bookmarkCourse,
                                 onClick = { courseID ->
                                     navController.navigate(CourseDetailScreen(courseID))
-                                }
+                                },
+                                onCategoryChange = viewModel::onCategoryChange,
                             )
                         }
                         composable<SearchScreen> {

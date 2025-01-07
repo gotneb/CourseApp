@@ -17,7 +17,7 @@ import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
 @Composable
 fun Chip(
     text: String,
-    onClick: (String) -> Unit = {},
+    onClick: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -29,11 +29,11 @@ fun Chip(
         Text(text = text)
     }
 }
-
-@Preview
-@Composable
-private fun ChipPreview() {
-    CourseAppTheme {
-        Chip("Coding")
-    }
-}
+//
+//@Preview
+//@Composable
+//private fun ChipPreview() {
+//    CourseAppTheme {
+//        Chip("Coding")
+//    }
+//}

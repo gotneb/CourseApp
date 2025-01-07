@@ -4,5 +4,7 @@ import com.gotneb.courseapp.domain.model.CourseModel
 
 data class BookmarkScreenState(
     val isLoading: Boolean = true,
+    val selectedCategory: String = "All",
     val courses: List<CourseModel> = emptyList(),
+    val filteredCourses: List<CourseModel> = emptyList(),
 )

@@ -10,7 +10,6 @@ import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
-import dagger.hilt.android.internal.lifecycle.HiltViewModelMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,9 +29,25 @@ class BookmarkScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val ids = dao.getAllCourseBookmarks()
-            ids.let {
-                getCourses(it!!.map { course -> course.courseId }.toList())
+            ids?.let {
+                getCourses(it.map { course -> course.courseId }.toList())
             }
+            _state.update {
+                it.copy(
+                    filteredCourses = _state.value.courses,
+                )
+            }
+        }
+    }
+
+    fun onCategoryChange(category: String) {
+        _state.update {
+            val filtered = if (category == "All") it.courses else {
+                it.courses.filter { course -> course.tags.contains(category.lowercase()) }
+            }
+            it.copy(
+                filteredCourses = filtered
+            )
         }
     }
 
@@ -41,9 +56,10 @@ class BookmarkScreenViewModel @Inject constructor(
         .onSuccess {
             Log.d("BookmarkScreen", "Sucess fetching courses ids \"${ids}\"")
             _state.update {
+                val courses = data.data.map { course -> course.copy(isBookmarked = true) }.toList()
                 it.copy(
                     isLoading = false,
-                    courses = data.data.map { course -> course.copy(isBookmarked = true) }.toList(),
+                    courses = courses,
                 )
             }
         }
