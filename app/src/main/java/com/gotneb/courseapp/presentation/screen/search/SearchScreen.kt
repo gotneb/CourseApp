@@ -3,7 +3,6 @@ package com.gotneb.courseapp.presentation.screen.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.presentation.screen.search.components.CourseCard
 import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
-import com.gotneb.courseapp.presentation.ui.theme.DarkBlue
+import com.gotneb.courseapp.presentation.ui.theme.DarkBlue2
 import com.gotneb.courseapp.presentation.ui.theme.WhiteSnow
 
 @Composable
@@ -67,7 +66,7 @@ fun SearchScreen(
                     // くそおめんどくせいな「Android Studio」
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     contentDescription = null,
-                    tint = DarkBlue,
+                    tint = DarkBlue2,
                     modifier = Modifier
                         .clip(RoundedCornerShape(100))
                         .clickable{ onReturnClick() }

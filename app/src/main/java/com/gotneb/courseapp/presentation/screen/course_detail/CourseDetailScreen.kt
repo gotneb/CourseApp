@@ -24,18 +24,26 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.gotneb.courseapp.R
 import com.gotneb.courseapp.presentation.screen.course_detail.components.LessonCard
+import com.gotneb.courseapp.presentation.ui.theme.DarkBlue
+import com.gotneb.courseapp.presentation.ui.theme.DarkBlue2
+import com.gotneb.courseapp.presentation.ui.theme.DarkGray
+import com.gotneb.courseapp.presentation.ui.theme.Orange
+import com.gotneb.courseapp.presentation.ui.theme.Purple
+import com.gotneb.courseapp.presentation.ui.theme.WhiteSnow
 
 @Composable
 fun CourseDetailScreen(
@@ -66,23 +74,28 @@ fun CourseDetailScreen(
                         // くそおめんどくせいな「Android Studio」
                         imageVector = Icons.Default.KeyboardArrowLeft,
                         contentDescription = null,
+                        tint = if (state.course!!.isBookmarked!!) DarkBlue2 else LocalContentColor.current,
                         modifier = Modifier
                             .clip(RoundedCornerShape(100))
                             .clickable { onReturnClick() }
-                            .background(Color.Gray)
+                            .background(WhiteSnow)
                             .padding(4.dp)
                     )
                     Spacer(Modifier.weight(1f))
-                    Text(text = "Course Details")
+                    Text(
+                        text = "Course Details",
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
                     Spacer(Modifier.weight(1f))
                     Icon(
-                        imageVector = if (state.course!!.isBookmarked!!) Icons.Filled.Favorite
+                        imageVector = if (state.course.isBookmarked) Icons.Filled.Favorite
                         else Icons.Default.FavoriteBorder,
                         contentDescription = null,
+                        tint = if (state.course.isBookmarked) DarkBlue2 else LocalContentColor.current,
                         modifier = Modifier
                             .clip(RoundedCornerShape(100))
                             .clickable { onBookmarkClick(state.course.id) }
-                            .background(Color.Gray)
+                            .background(WhiteSnow)
                             .padding(4.dp)
                     )
                 }
@@ -107,12 +120,15 @@ fun CourseDetailScreen(
                 ) {
                     Text(
                         text = state.course!!.title,
-                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.headlineLarge,
                     )
                     Spacer(Modifier.width(12.dp))
-                    Text(text = "$${state.course.price}")
+                    Text(
+                        text = "$${state.course.price}",
+                        style = MaterialTheme.typography.titleLarge.copy(color = Purple, fontWeight = FontWeight.SemiBold)
+                    )
                 }
             }
             item {
@@ -127,34 +143,52 @@ fun CourseDetailScreen(
                             .size(48.dp)
                             .clip(RoundedCornerShape(100))
                     )
-                    Text(text = state.course!!.instructor.name)
+                    Text(
+                        text = state.course!!.instructor.name,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
                     Spacer(Modifier.weight(1f))
                     Icon(
                         imageVector = Icons.Default.Star,
+                        tint = Orange,
                         contentDescription = "Instructor's rating",
                     )
-                    Text(text = "${state.course.rating}")
+                    Text(
+                        text = "${state.course.rating}",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = "Enrolled people",
+                        tint = DarkBlue,
                         modifier = Modifier.padding(start = 8.dp)
                     )
-                    Text(text = "${state.course.enrolledPeople}")
+                    Text(
+                        text = "${state.course.enrolledPeople}",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 }
             }
             item {
                 Column {
-                    Text(text = "Description")
+                    Text(
+                        text = "Description",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = state.course!!.description,
                         maxLines = 4,
                         overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodySmall.copy(color = DarkGray),
                     )
                 }
             }
             item {
-                Text(text = "${state.course!!.lessons.size} Lessons")
+                Text(
+                    text = "${state.course!!.lessons.size} Lessons",
+                    style = MaterialTheme.typography.titleLarge,
+                )
             }
             items(state.course!!.lessons) { lesson ->
                 LessonCard(lesson)

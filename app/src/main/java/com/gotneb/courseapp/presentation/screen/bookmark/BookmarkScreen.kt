@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -68,7 +69,10 @@ fun BookmarkScreen(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(text = "Bookmarks")
+                Text(
+                    text = "Bookmarks",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
             }
         }
         // =====================
@@ -79,8 +83,12 @@ fun BookmarkScreen(
                 value = state.searchText,
                 onValueChange = onValueChange,
                 placeholder = {
-                    Text(text = "Search your course...")
+                    Text(
+                        text = "Search your course...",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 },
+                textStyle = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 leadingIcon = {
                     Icon(
