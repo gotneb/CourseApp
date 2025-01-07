@@ -32,3 +32,57 @@ val Typography = Typography(
     )
     */
 )
+
+val AppTypography = Typography(
+    bodyMedium = TextStyle( // For color 202244, 16sp
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Medium,
+        color = DarkBlue
+    ),
+    bodySmall = TextStyle( // For color BBBBBB, 14sp
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        color = Gray
+    ),
+    labelLarge = TextStyle( // For chips (FFFFFF, 14sp, Regular)
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        color = White
+    ),
+    labelSmall = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        color = Gray,
+    ),
+    headlineMedium = TextStyle( // For "Popular Courses" (202244, 20sp, Medium)
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Medium,
+        color = DarkBlue,
+    ),
+    headlineSmall = TextStyle( // For "Popular Courses" subtext (774DED, 14sp, Medium Italic)
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+        color = Purple
+    ),
+    titleLarge = TextStyle( // For banners (202244, 16sp, Medium)
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Medium,
+        color = DarkBlue
+    ),
+    titleMedium = TextStyle( // For banners subtext (774DED, 14sp, SemiBold)
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Purple
+    ),
+    titleSmall = TextStyle( // For banners subtext (333333, 14sp, Regular)
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        color = DarkGray
+    ),
+    bodyLarge = TextStyle( // Search bar text (333333, 16sp, Regular)
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        color = DarkGray
+    )
+)
