@@ -5,8 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -84,8 +87,15 @@ fun HomeScreen(
                         .clip(RoundedCornerShape(100))
                 )
                 Column {
-                    Text(text = "Hey, Jane")
-                    Text(text = "Find your favorites courses.")
+                    Text(
+                        text = "Hey, Jane",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "Find your favorites courses.",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
                 }
             }
         }
@@ -97,8 +107,12 @@ fun HomeScreen(
                 value = state.searchText,
                 onValueChange = onSearchChange,
                 placeholder = {
-                    Text(text = "I would like to learn...")
+                    Text(
+                        text = "I would like to learn...",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 },
+                textStyle = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 leadingIcon = {
                     Icon(
@@ -160,9 +174,15 @@ fun HomeScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(text = "Popular courses")
+                Text(
+                    text = "Popular courses",
+                    style = MaterialTheme.typography.headlineMedium
+                )
                 TextButton(onClick = {}) {
-                    Text(text = "See all")
+                    Text(
+                        text = "See all",
+                        style = MaterialTheme.typography.titleMedium,
+                    )
                 }
             }
         }
@@ -186,7 +206,8 @@ private fun HomeScreenPreview() {
     CourseAppTheme {
         HomeScreen(
             state = HomeScreenState(
-                isLoadingPopularCourses = true,
+                isLoadingPopularCourses = false,
+                isLoadingCategoriesCourses = false,
             ),
             onCourseClick = {},
             onSearchChange = {},
