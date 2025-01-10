@@ -64,25 +64,25 @@ class BookmarkScreenViewModel @Inject constructor(
     }
 
     suspend fun getCourses(ids: List<Int>) = repository.getCourses(ids).onSuccess {
-            Log.d("BookmarkScreen", "Sucess fetching courses ids \"${ids}\"")
-            _state.update {
-                val courses = data.data.map { course -> course.copy(isBookmarked = true) }.toList()
-                it.copy(
-                    isLoading = false,
-                    courses = courses,
-                )
-            }
-        }.onFailure {
-            Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
-            _state.update {
-                it.copy(isLoading = false)
-            }
-        }.onError {
-            Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
-            _state.update {
-                it.copy(isLoading = false)
-            }
+        Log.d("BookmarkScreen", "Sucess fetching courses ids \"${ids}\"")
+        _state.update {
+            val courses = data.data.map { course -> course.copy(isBookmarked = true) }.toList()
+            it.copy(
+                isLoading = false,
+                courses = courses,
+            )
         }
+    }.onFailure {
+        Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
+        _state.update {
+            it.copy(isLoading = false)
+        }
+    }.onError {
+        Log.e("BookmarkScreen", "Error fetching courses ids \"${ids}\"\nError -> ${message()}")
+        _state.update {
+            it.copy(isLoading = false)
+        }
+    }
 
     fun bookmarkCourse(id: Int) {
         viewModelScope.launch {
@@ -99,11 +99,15 @@ class BookmarkScreenViewModel @Inject constructor(
 
     private fun updateBookmarkState(id: Int) {
         _state.update {
-            it.copy(courses = it.courses.map { course ->
+            val courses = it.courses.map { course ->
                 if (course.id == id) {
                     course.copy(isBookmarked = !course.isBookmarked!!)
                 } else course
-            })
+            }
+            it.copy(
+                courses = courses,
+                filteredCourses = courses
+            )
         }
     }
 }
