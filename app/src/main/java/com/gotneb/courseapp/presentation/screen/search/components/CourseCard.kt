@@ -38,7 +38,7 @@ fun CourseCard(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shadowElevation = 8.dp,
+        shadowElevation = 4.dp,
         shape = RoundedCornerShape(6.dp),
         modifier = Modifier.clickable{ onClick() }
     ) {

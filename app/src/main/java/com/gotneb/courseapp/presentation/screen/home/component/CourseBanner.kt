@@ -61,7 +61,7 @@ fun CourseBanner(
     onBookmarkClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(shadowElevation = 8.dp,
+    Surface(shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier.clickable { onClick(course.id) }) {
         Column(

@@ -33,7 +33,7 @@ fun CourseListItem(
     onClick: (Int) -> Unit,
 ) {
     Surface(
-        shadowElevation = 6.dp,
+        shadowElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier.clickable{ onClick(course.id) }
     ) {
