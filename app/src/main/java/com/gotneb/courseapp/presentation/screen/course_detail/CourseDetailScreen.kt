@@ -1,5 +1,6 @@
 package com.gotneb.courseapp.presentation.screen.course_detail
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,21 +23,26 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.gotneb.courseapp.R
+import coil3.compose.AsyncImage
 import com.gotneb.courseapp.presentation.screen.course_detail.components.LessonCard
 import com.gotneb.courseapp.presentation.ui.theme.DarkBlue
 import com.gotneb.courseapp.presentation.ui.theme.DarkBlue2
@@ -44,6 +50,8 @@ import com.gotneb.courseapp.presentation.ui.theme.DarkGray
 import com.gotneb.courseapp.presentation.ui.theme.Orange
 import com.gotneb.courseapp.presentation.ui.theme.Purple
 import com.gotneb.courseapp.presentation.ui.theme.WhiteSnow
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun CourseDetailScreen(
@@ -105,10 +113,13 @@ fun CourseDetailScreen(
                     shadowElevation = 8.dp,
                     shape = RoundedCornerShape(8.dp),
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.background),
+                    AsyncImage(
+                        model = state.course!!.thumbnailUrl,
                         contentDescription = null,
-                        modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
                     )
                 }
             }
@@ -127,7 +138,10 @@ fun CourseDetailScreen(
                     Spacer(Modifier.width(12.dp))
                     Text(
                         text = "$${state.course.price}",
-                        style = MaterialTheme.typography.titleLarge.copy(color = Purple, fontWeight = FontWeight.SemiBold)
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            color = Purple,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     )
                 }
             }
@@ -135,16 +149,17 @@ fun CourseDetailScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.pfp),
+                    AsyncImage(
+                        model = state.course!!.instructor.profileUrl,
                         contentDescription = "Instructor's photo",
                         modifier = Modifier
                             .padding(end = 12.dp)
                             .size(48.dp)
+                            .fillMaxWidth()
                             .clip(RoundedCornerShape(100))
                     )
                     Text(
-                        text = state.course!!.instructor.name,
+                        text = state.course.instructor.name,
                         style = MaterialTheme.typography.titleLarge,
                     )
                     Spacer(Modifier.weight(1f))
@@ -170,7 +185,10 @@ fun CourseDetailScreen(
                 }
             }
             item {
-                Column {
+                var isExpanded by remember { mutableStateOf(false) }
+                Column(
+                    modifier = Modifier.clickable { isExpanded = !isExpanded }
+                ) {
                     Text(
                         text = "Description",
                         style = MaterialTheme.typography.titleLarge,
@@ -178,10 +196,18 @@ fun CourseDetailScreen(
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = state.course!!.description,
-                        maxLines = 4,
+                        maxLines = if (isExpanded) Int.MAX_VALUE else 3,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodySmall.copy(color = DarkGray),
+                        modifier = Modifier.animateContentSize()
                     )
+                    if (state.course.description.length >= 110) {
+                        Text(
+                            text = if (isExpanded) "Show less" else "Show more",
+                            style = MaterialTheme.typography.bodySmall.copy(color = DarkBlue),
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
                 }
             }
             item {

@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.gotneb.courseapp.R
 import com.gotneb.courseapp.domain.model.CourseModel
 import com.gotneb.courseapp.presentation.ui.theme.Purple
@@ -44,8 +45,8 @@ fun CourseListItem(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.bg),
+            AsyncImage(
+                model = course.thumbnailUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 8.dp)
@@ -66,8 +67,8 @@ fun CourseListItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.pfp),
+                    AsyncImage(
+                        model = course.instructor.profileUrl,
                         contentDescription = null,
                         modifier = Modifier
                             .size(32.dp)

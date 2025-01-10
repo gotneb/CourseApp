@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.gotneb.courseapp.R
 import com.gotneb.courseapp.domain.model.CourseModel
 import com.gotneb.courseapp.domain.model.LessonModel
@@ -72,10 +73,10 @@ fun CourseBanner(
             Box(
                 modifier = modifier
             ) {
-                Image(
-                    painter = painterResource(R.drawable.bg),
+                AsyncImage(
+                    model = course.thumbnailUrl,
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillHeight,
                     modifier = modifier
                         .height(200.dp)
                         .clip(RoundedCornerShape(6))
@@ -130,7 +131,7 @@ fun CourseBanner(
             ) {
                 Text(
                     text = course.title,
-                    maxLines = 2,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.weight(1f)
@@ -146,8 +147,8 @@ fun CourseBanner(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(R.drawable.pfp),
+                AsyncImage(
+                    model = course.instructor.profileUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(32.dp)

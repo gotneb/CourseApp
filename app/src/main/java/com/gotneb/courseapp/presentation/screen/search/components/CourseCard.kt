@@ -11,18 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gotneb.courseapp.presentation.ui.theme.CourseAppTheme
+import coil3.compose.AsyncImage
 import com.gotneb.courseapp.R
 import com.gotneb.courseapp.domain.model.CourseModel
 import com.gotneb.courseapp.presentation.ui.theme.Purple
@@ -47,10 +46,13 @@ fun CourseCard(
             modifier = modifier
                 .padding(8.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.bg),
+            AsyncImage(
+                model = course.thumbnailUrl,
                 contentDescription = null,
-                modifier = Modifier.clip(RoundedCornerShape(5))
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(5))
             )
             Text(
                 text = course.tags.first().capitalize(),
